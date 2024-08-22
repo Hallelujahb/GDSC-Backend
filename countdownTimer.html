@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <form>
+        Input your time in seconds: <input type="number" id="time">
+        <button type="button" id="start">start</button>
+    </form>
+    <p>
+        Time remaining: <span id="timer"></span>
+    </p>
+    <script>
+        document.body.style.backgroundColor="pink"
+        let timer= document.getElementById("timer")
+        let time= document.getElementById("time")
+        let start= document.getElementById("start")
+
+        function startTimer(){
+            let remaining= time.value
+            timer.textContent=remaining
+
+            let Interval= setInterval(()=>{
+                remaining--
+                timer.textContent=remaining
+                if (remaining <= 0){
+                clearInterval(Interval)
+                document.body.append("Time's UP!")
+                alert("Time's UP!")
+                }
+
+            },1000)
+
+        }
+        start.addEventListener('click', startTimer)
+
+    </script>
+</body>
+</html>
