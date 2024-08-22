@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title><style>
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+    
+
+</head>
+<body>
+    <h1>To-do List</h1>
+    <ul id="checklists"></ul>
+    <input type="text" id="input" placeholder="New task">
+    <button id="addtask">Add Task</button>
+
+    <script>
+        document.body.style.backgroundColor='pink'
+document.addEventListener('DOMContentLoaded', function() {
+    const todoItemArray = [];
+  
+    class TodoItem {
+      constructor(items, completion = false) {
+        this.items = items
+        this.completion = completion
+      }
+    }
+  
+    class TodoList {
+      addTask(items, completion = false) {
+        let list = new TodoItem(items, completion)
+        todoItemArray.push(list)
+      }
+  
+      completion() {
+        todoItemArray.forEach(function(entry) {
+          if (entry.completion === true) {
+            console.log("Completed.")
+          } else {
+            console.log("Incomplete")
+          }
+        })
+      }
+    }
+  
+    const htmlList = document.getElementById('checklists')
+    function updateHtmlList() {
+      htmlList.innerHTML = ''
+      todoItemArray.forEach(function(entry) {
+        let li= document.createElement('li')
+        let checkbox= document.createElement('input')
+        checkbox.type ='checkbox'
+        checkbox.checked =entry.completion
+        checkbox.addEventListener('change', function() {
+          entry.completion =checkbox.checked
+          li.classList.toggle('completed', checkbox.checked)
+        })
+        li.appendChild(checkbox)
+        li.appendChild(document.createTextNode(entry.items))
+        if (entry.completion) {
+          li.classList.add('completed')
+        }
+        htmlList.appendChild(li)
+      })
+    }
+    updateHtmlList()
+  
+    let addTaskButton = document.getElementById("addtask")
+    addTaskButton.addEventListener('click', function() {
+      let taskInput = document.getElementById("input").value
+      let newTaskItem = new TodoItem(taskInput, false)
+      todoItemArray.push(newTaskItem)
+      updateHtmlList()
+    })
+})
+    </script>
+
+</body>
+</html>
